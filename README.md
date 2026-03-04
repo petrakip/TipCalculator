@@ -12,7 +12,7 @@ Calculate tips instantly, split the bill per person, and optionally round up the
 ## Preview 🎬
 
 <p align="center">
-  <img src="preview/tip_calculator_demo.gif" width="450"/>
+  <img src="preview/tip_calculator_demo.gif" width="250"/>
 </p>
 
 ## Screenshots 📸
