@@ -48,6 +48,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -226,12 +227,14 @@ internal fun calculateTip(amount: Double, tipPercent: Double = 15.0, person: Int
     return tip
 }
 
-fun calculateBill(amount: Double, person: Int): Double{
+@VisibleForTesting
+internal fun calculateBill(amount: Double, person: Int): Double{
     val bill = amount / person
     return bill
 }
 
-fun calculateTotalBill(amount: Double, tip: Double): Double {
+@VisibleForTesting
+internal fun calculateTotalBill(amount: Double, tip: Double): Double {
     val totalBill = amount + tip
     return totalBill
 }
@@ -350,7 +353,8 @@ fun RoundTipRow(
         Switch(
             modifier = modifier
                 .fillMaxWidth()
-                .wrapContentWidth(Alignment.End),
+                .wrapContentWidth(Alignment.End)
+                .testTag("round_switch"),
             checked = roundUp,
             onCheckedChange = onRoundUpChanged,
             colors = SwitchDefaults.colors(
