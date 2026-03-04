@@ -11,13 +11,16 @@ Calculate tips instantly, split the bill per person, and optionally round up the
 
 ## Preview 🎬
 
-![Tip Calculator Demo](preview/tip_calculator_demo.gif)
+<img src="screenshots/screen1.png" width="400">
+
+Watch demo video ↓  
+[Demo Video](preview/tip_calculator_demo.gif)
 
 ## Screenshots 📸
 
-| App_Appearance               | Amount & Tip Selection       | Split Bill & Round Up        |
-|------------------------------|------------------------------|------------------------------|
-| ![](screenshots/screen1.png) | ![](screenshots/screen2.png) | ![](screenshots/screen3.png) |
+| App_Appearance                                  | Amount & Tip Selection                          | Split Bill & Round Up                           |
+|-------------------------------------------------|-------------------------------------------------|-------------------------------------------------|
+| <img src="screenshots/screen1.png" width="250"> | <img src="screenshots/screen2.png" width="250"> | <img src="screenshots/screen3.png" width="250"> |
 
 ## ✨ Features
 
@@ -63,6 +66,7 @@ Calculate tips instantly, split the bill per person, and optionally round up the
 
 ## 📂 Project Structure
 
+```
 TipCalculator
 │
 ├── app
@@ -91,6 +95,7 @@ TipCalculator
 │
 ├── README.md
 └── Gradle configuration files
+```
 
 ## 🧪 Testing
 
