@@ -49,6 +49,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -374,6 +375,8 @@ fun SelectTipAmount(
     tipInput: String,
     onTipChange: (String) -> Unit
 ) {
+    val focusManager = LocalFocusManager.current
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -405,10 +408,33 @@ fun SelectTipAmount(
                 .padding(top = 8.dp, start = 16.dp, bottom = 8.dp, end = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            TipPercentageOption(stringResource(R.string.ten), selected = tipInput == "10") { onTipChange("10") }
-            TipPercentageOption(stringResource(R.string.fifteen), selected = tipInput == "15") { onTipChange("15") }
-            TipPercentageOption(stringResource(R.string.twenty), selected = tipInput == "20") { onTipChange("20") }
-            TipPercentageOption(stringResource(R.string.twenty_five), selected = tipInput == "25") { onTipChange("25") }
+            TipPercentageOption(
+                stringResource(R.string.ten),
+                selected = tipInput == "10"
+            ) {
+                onTipChange("10")
+                focusManager.clearFocus()
+            }
+            TipPercentageOption(
+                stringResource(R.string.fifteen),
+                selected = tipInput == "15"
+            ) {
+                onTipChange("15")
+                focusManager.clearFocus()
+            }
+            TipPercentageOption(
+                stringResource(R.string.twenty),
+                selected = tipInput == "20"
+            ) {
+                onTipChange("20")
+                focusManager.clearFocus()
+            }
+            TipPercentageOption(
+                stringResource(R.string.twenty_five),
+                selected = tipInput == "25"
+            ) {
+                onTipChange("25")
+                focusManager.clearFocus()}
         }
         Row(
             modifier = Modifier
