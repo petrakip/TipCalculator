@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
@@ -107,6 +108,7 @@ fun TipCalculatorLayout(modifier: Modifier = Modifier) {
     Column(
         modifier = Modifier
             .statusBarsPadding()
+            .navigationBarsPadding()
             .padding(start = 20.dp, end = 20.dp)
             .verticalScroll(rememberScrollState())
             .safeDrawingPadding(),
