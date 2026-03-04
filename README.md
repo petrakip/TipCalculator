@@ -19,7 +19,7 @@ Calculate tips instantly, split the bill per person, and optionally round up the
 
 | App_Appearance                                  | Amount & Tip Selection                          | Split Bill & Round Up                           |
 |-------------------------------------------------|-------------------------------------------------|-------------------------------------------------|
-| <img src="screenshots/screen1.png" width="250"> | <img src="screenshots/screen2.png" width="250"> | <img src="screenshots/screen3.png" width="250"> |
+| <img src="screenshots/screen1.png" width="200"> | <img src="screenshots/screen2.png" width="200"> | <img src="screenshots/screen3.png" width="200"> |
 
 ## ✨ Features
 
