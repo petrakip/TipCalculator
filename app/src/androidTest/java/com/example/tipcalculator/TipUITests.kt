@@ -1,5 +1,6 @@
 package com.example.tipcalculator
 
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -9,6 +10,7 @@ import com.example.tipcalculator.ui.theme.TipCalculatorTheme
 import org.junit.Rule
 import org.junit.Test
 import java.text.NumberFormat
+import java.util.Locale
 
 class TipUITests {
 
@@ -29,10 +31,11 @@ class TipUITests {
         composeTestRule.onNodeWithText("20%")
             .performClick()
 
-        val expectedTip = NumberFormat.getCurrencyInstance().format(2)
+        val expectedTip = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(2)
 
-        composeTestRule.onNodeWithText(expectedTip)
-            .assertExists("No node with this text was found.")
+        composeTestRule
+            .onNodeWithTag("tip_amount")
+            .assertTextEquals(expectedTip)
     }
 
     @Test
@@ -46,16 +49,17 @@ class TipUITests {
         composeTestRule.onNodeWithText("Bill Amount")
             .performTextInput("10")
 
-        composeTestRule.onNodeWithText("Tip Percentage")
+        composeTestRule.onNodeWithTag("tip_input")
             .performTextInput("40")
 
-        composeTestRule.onNodeWithText("+")
-            .performClick()
+        composeTestRule.onNodeWithTag("person_plus").performClick()
+        composeTestRule.waitForIdle()
 
-        val expectedTip = NumberFormat.getCurrencyInstance().format(2)
+        val expectedTip = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(2)
 
-        composeTestRule.onNodeWithText(expectedTip)
-            .assertExists("No node with this text was found.")
+        composeTestRule
+            .onNodeWithTag("tip_amount")
+            .assertTextEquals(expectedTip)
     }
 
     @Test
@@ -69,16 +73,17 @@ class TipUITests {
         composeTestRule.onNodeWithText("Bill Amount")
             .performTextInput("10")
 
-        composeTestRule.onNodeWithText("Tip Percentage")
+        composeTestRule.onNodeWithTag("tip_input")
             .performTextInput("40")
 
-        composeTestRule.onNodeWithText("+")
-            .performClick()
+        composeTestRule.onNodeWithTag("person_plus").performClick()
+        composeTestRule.waitForIdle()
 
-        val expectedBill = NumberFormat.getCurrencyInstance().format(5)
+        val expectedBill = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(5)
 
-        composeTestRule.onNodeWithText(expectedBill)
-            .assertExists("No node with this text was found.")
+        composeTestRule
+            .onNodeWithTag("bill_amount")
+            .assertTextEquals(expectedBill)
     }
 
     @Test
@@ -92,16 +97,17 @@ class TipUITests {
         composeTestRule.onNodeWithText("Bill Amount")
             .performTextInput("10")
 
-        composeTestRule.onNodeWithText("Tip Percentage")
+        composeTestRule.onNodeWithTag("tip_input")
             .performTextInput("40")
 
-        composeTestRule.onNodeWithText("+")
-            .performClick()
+        composeTestRule.onNodeWithTag("person_plus").performClick()
+        composeTestRule.waitForIdle()
 
-        val expectedTotal = NumberFormat.getCurrencyInstance().format(7)
+        val expectedTotal = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(7)
 
-        composeTestRule.onNodeWithText(expectedTotal)
-            .assertExists("No node with this text was found.")
+        composeTestRule
+            .onNodeWithTag("total_amount")
+            .assertTextEquals(expectedTotal)
     }
 
     @Test
@@ -115,21 +121,21 @@ class TipUITests {
         composeTestRule.onNodeWithText("Bill Amount")
             .performTextInput("10")
 
-        composeTestRule.onNodeWithText("Tip Percentage")
+        composeTestRule.onNodeWithTag("tip_input")
             .performTextInput("40")
 
-        composeTestRule.onNodeWithText("+")
-            .performClick()
-        composeTestRule.onNodeWithText("+")
-            .performClick()
+        composeTestRule.onNodeWithTag("person_plus").performClick()
+        composeTestRule.onNodeWithTag("person_plus").performClick()
+        composeTestRule.waitForIdle()
 
         composeTestRule.onNodeWithTag("round_switch")
             .performClick()
 
-        val expectedTip = NumberFormat.getCurrencyInstance().format(2)
+        val expectedTip = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(2)
 
-        composeTestRule.onNodeWithText(expectedTip)
-            .assertExists("No node with this text was found.")
+        composeTestRule
+            .onNodeWithTag("tip_amount")
+            .assertTextEquals(expectedTip)
     }
 
     @Test
@@ -143,17 +149,17 @@ class TipUITests {
         composeTestRule.onNodeWithText("Bill Amount")
             .performTextInput("10")
 
-        composeTestRule.onNodeWithText("Tip Percentage")
+        composeTestRule.onNodeWithTag("tip_input")
             .performTextInput("40")
 
-        composeTestRule.onNodeWithText("+")
-            .performClick()
-        composeTestRule.onNodeWithText("+")
-            .performClick()
+        composeTestRule.onNodeWithTag("person_plus").performClick()
+        composeTestRule.onNodeWithTag("person_plus").performClick()
+        composeTestRule.waitForIdle()
 
-        val expectedTip = NumberFormat.getCurrencyInstance().format(1.33)
+        val expectedTip = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(1.33)
 
-        composeTestRule.onNodeWithText(expectedTip)
-            .assertExists("No node with this text was found.")
+        composeTestRule
+            .onNodeWithTag("tip_amount")
+            .assertTextEquals(expectedTip)
     }
 }

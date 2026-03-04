@@ -39,11 +39,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -61,7 +58,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tipcalculator.ui.theme.TipCalculatorTheme
+import com.example.tipcalculator.viewmodel.TipCalculatorViewModel
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -92,11 +91,14 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun TipCalculatorLayout(modifier: Modifier = Modifier) {
-    var amountInput by remember { mutableStateOf("") }
-    var tipInput by remember { mutableStateOf("") }
-    var roundUp by remember { mutableStateOf(false) }
-    var person by remember { mutableIntStateOf(1) }
+fun TipCalculatorLayout(
+    modifier: Modifier = Modifier,
+    viewModel: TipCalculatorViewModel = viewModel()
+) {
+    val amountInput by viewModel.amountInput.collectAsState()
+    val tipInput by viewModel.tipInput.collectAsState()
+    val roundUp by viewModel.roundUp.collectAsState()
+    val person by viewModel.person.collectAsState()
 
     val amount = amountInput.toDoubleOrNull() ?: 0.0
     val tipPercent = tipInput.toDoubleOrNull() ?: 0.0
@@ -124,15 +126,18 @@ fun TipCalculatorLayout(modifier: Modifier = Modifier) {
             fontWeight = FontWeight.Bold,
             color = Color.White
         )
-        BillAmount(amountInput = amountInput, onAmountChange = { amountInput = it})
+        BillAmount(amountInput = amountInput, onAmountChange = viewModel::updateAmount)
         Spacer(modifier.height(20.dp))
-        SelectTipAmount(tipInput = tipInput, onTipChange = { tipInput = it})
+        SelectTipAmount(tipInput = tipInput, onTipChange = viewModel::updateTip)
         Spacer(modifier.height(20.dp))
-        BillPerPerson(person = person, onPersonChange = { person = it })
+        BillPerPerson(person = person,
+            onIncrease = viewModel::increasePerson,
+            onDecrease = viewModel::decreasePerson
+        )
         Spacer(modifier.height(8.dp))
         RoundTipRow(
             roundUp = roundUp,
-            onRoundUpChanged = { roundUp = it },
+            onRoundUpChanged = viewModel::updateRoundUp,
             modifier = Modifier.padding(10.dp)
         )
         Spacer(modifier.height(8.dp))
@@ -170,7 +175,8 @@ fun TipCalculatorLayout(modifier: Modifier = Modifier) {
                     )
                     Text(
                         modifier = Modifier
-                            .padding(10.dp),
+                            .padding(10.dp)
+                            .testTag("tip_amount"),
                         text = currencyFormatter.format(tip),
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
@@ -182,14 +188,17 @@ fun TipCalculatorLayout(modifier: Modifier = Modifier) {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        modifier = Modifier.padding(10.dp),
+                        modifier = Modifier
+                            .padding(10.dp),
                         text = stringResource(R.string.bill),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White
                     )
                     Text(
-                        modifier = Modifier.padding(10.dp),
+                        modifier = Modifier
+                            .padding(10.dp)
+                            .testTag("bill_amount"),
                         text = currencyFormatter.format(bill),
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
@@ -208,7 +217,9 @@ fun TipCalculatorLayout(modifier: Modifier = Modifier) {
                         color = Color.White
                     )
                     Text(
-                        modifier = Modifier.padding(10.dp),
+                        modifier = Modifier
+                            .padding(10.dp)
+                            .testTag("total_amount"),
                         text = currencyFormatter.format(total),
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
@@ -453,6 +464,7 @@ fun SelectTipAmount(
                 modifier = Modifier
                     .padding(bottom = 28.dp)
                     .fillMaxWidth()
+                    .testTag("tip_input")
             )
         }
     }
@@ -482,7 +494,8 @@ fun TipPercentageOption(
 @Composable
 fun BillPerPerson(
     person: Int,
-    onPersonChange: (Int) -> Unit,
+    onIncrease: () -> Unit,
+    onDecrease: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -517,7 +530,8 @@ fun BillPerPerson(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxHeight()
-                    .clickable { if (person > 1) onPersonChange(person - 1) }
+                    .clickable { if (person > 1) onDecrease() }
+                    .testTag("person_minus")
                     .padding(start = 12.dp),
                 contentAlignment = Alignment.Center
             ) {
@@ -545,7 +559,8 @@ fun BillPerPerson(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxHeight()
-                    .clickable { onPersonChange(person + 1) }
+                    .clickable { onIncrease() }
+                    .testTag("person_plus")
                     .padding(end = 12.dp),
                 contentAlignment = Alignment.Center
             ) {
