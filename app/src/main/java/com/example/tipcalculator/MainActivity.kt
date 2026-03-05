@@ -525,7 +525,7 @@ fun BillPerPerson(
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
         )
-        Row() {
+        Row(modifier = Modifier.padding(start = 24.dp, end = 24.dp)) {
             Box(
                 modifier = Modifier
                     .weight(1f)
@@ -537,7 +537,7 @@ fun BillPerPerson(
             ) {
                 Text(
                     text = stringResource(R.string.minus),
-                    fontSize = 36.sp,
+                    fontSize = 28.sp,
                     fontWeight = FontWeight.Bold,
                     color = colorResource(R.color.grey_text_field)
                 )
@@ -550,7 +550,7 @@ fun BillPerPerson(
             ) {
                 Text(
                     text = person.toString(),
-                    fontSize = 32.sp,
+                    fontSize = 28.sp,
                     fontWeight = FontWeight.Bold,
                     color = colorResource(R.color.grey_text_field)
                 )
@@ -566,7 +566,7 @@ fun BillPerPerson(
             ) {
                 Text(
                     text = stringResource(R.string.plus),
-                    fontSize = 36.sp,
+                    fontSize = 28.sp,
                     fontWeight = FontWeight.Bold,
                     color = colorResource(R.color.grey_text_field)
                 )
